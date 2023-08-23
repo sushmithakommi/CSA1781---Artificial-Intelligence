@@ -1,0 +1,41 @@
+% Define symptoms
+symptom(fever).
+symptom(cough).
+symptom(sore_throat).
+symptom(runny_nose).
+symptom(body_aches).
+symptom(fatigue).
+
+% Define diseases and their associated symptoms
+disease(cold, [cough, sore_throat, runny_nose, body_aches, fatigue]).
+disease(flu, [fever, cough, sore_throat, body_aches, fatigue]).
+disease(allergies, [runny_nose, cough]).
+
+% Predicate to check if a list of symptoms matches a disease
+matches_disease(Symptoms, Disease) :-
+    disease(Disease, DiseaseSymptoms),
+    subset(DiseaseSymptoms, Symptoms).
+
+% Main diagnosis predicate
+diagnose(Disease) :-
+    writeln("Welcome to the Medical Diagnosis System!"),
+    writeln("Please enter the symptoms, one by one. Type 'done.' when finished."),
+    diagnose_symptoms([], Disease).
+
+% Recursive predicate to gather symptoms and diagnose
+diagnose_symptoms(Symptoms, Disease) :-
+    writeln("Enter symptom:"),
+    read(Symptom),
+    (Symptom = done ->
+        (matches_disease(Symptoms, Disease) ->
+            format("Based on the symptoms entered, you may have ~w.~n", [Disease]);
+            writeln("Sorry, we couldn't determine the disease.")
+        );
+        (symptom(Symptom) ->
+            diagnose_symptoms([Symptom | Symptoms], Disease);
+            writeln("Invalid symptom. Please enter a valid symptom.")
+        )
+    ).
+
+% Example usage
+:- diagnose(Disease).
