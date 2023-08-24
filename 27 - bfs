@@ -53,6 +53,6 @@ compare_path(Order, path(, Cost1, Heuristic1), path(, Cost2, Heuristic2)) :-
 select_best_path([Path | _], Path).
 
 % Example usage
-:- best_first_search(a, f, Path),
-   writeln("Best-First Search Path:"),
-   writeln(Path).
+% best_first_search(a, f, Path),
+%  writeln("Best-First Search Path:"),
+%  writeln(Path).
